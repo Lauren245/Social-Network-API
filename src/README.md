@@ -57,6 +57,8 @@ Email: laurenmoorejm@gmail.com
 
 5. **[Mongoose SchemaType Options](https://www.geeksforgeeks.org/mongoose-schematype-options/)** by Geeks for Geeks:
 
+6. **[Mongoose Validation](https://www.geeksforgeeks.org/mongoose-validation/)** by Geeks for Geeks:
+
 ### 3rd-Party Software
 
 ## Screenshots
