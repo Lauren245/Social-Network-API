@@ -59,6 +59,9 @@ Email: laurenmoorejm@gmail.com
 
 6. **[Mongoose Validation](https://www.geeksforgeeks.org/mongoose-validation/)** by Geeks for Geeks:
 
+7. **[Validation in Mongoose(where, how and handle errors)](https://chanwingkeihaha.medium.com/validation-in-mongoose-where-how-and-handle-errors-b44f68cccae3)**
+by: Yingqi Chen
+
 ### 3rd-Party Software
 
 ## Screenshots
