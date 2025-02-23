@@ -62,6 +62,7 @@ Email: laurenmoorejm@gmail.com
 7. **[Validation in Mongoose(where, how and handle errors)](https://chanwingkeihaha.medium.com/validation-in-mongoose-where-how-and-handle-errors-b44f68cccae3)**
 by: Yingqi Chen
 
+8. **[Subdocuments](https://mongoosejs.com/docs/subdocs.html)** mongoose documentation
 ### 3rd-Party Software
 
 ## Screenshots
