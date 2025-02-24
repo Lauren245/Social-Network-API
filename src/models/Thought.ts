@@ -35,6 +35,16 @@ const reactionSchema = new Schema<IReaction>(
             //had to add any type to bypass strict type checking because dayjs formatting is a string, not a Date.
             get: (value: Date): any => dayjs(value).format("MMMM D, YYYY h:mm A") 
         }
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true //this is technically not needed because we want to include the getters and toJSON does this by default.
+        },
+        toObject: {
+            virtuals: true,
+            getters: true
+        }
     }
 );
 
@@ -67,9 +77,11 @@ const thoughtSchema = new Schema<IThought>(
     {
         toJSON: {
             virtuals: true,
+            getters: true //this is technically not needed because we want to include the getters and toJSON does this by default.
         },
         toObject: {
             virtuals: true,
+            getters: true
         }
     }
 );

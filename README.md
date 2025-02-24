@@ -64,7 +64,9 @@ by: Yingqi Chen
 
 8. **[Subdocuments](https://mongoosejs.com/docs/subdocs.html)** mongoose documentation
 
-9. **[Schemas](https://mongoosejs.com/docs/guide.html)** mongoose schema documentation
+9. **[Schemas](https://mongoosejs.com/docs/guide.html)** mongoose documentation
+
+10. **[Getters/Setters in Mongoose](https://mongoosejs.com/docs/tutorials/getters-setters.html)** mongoose documentation
 
 ### 3rd-Party Software
 
