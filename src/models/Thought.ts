@@ -12,7 +12,8 @@ interface IThought extends Document {
     thoughtText: string,
     createdAt: Date,
     username: string, 
-    reactions: Schema.Types.ObjectId[]
+    reactions: IReaction[],
+    reactionCount?: number //for virtual
 };
 
 const reactionSchema = new Schema<IReaction>(
@@ -29,7 +30,10 @@ const reactionSchema = new Schema<IReaction>(
         createdAt: {
             type: Date,
             default: () => dayjs().toDate(),
-            immutable: true //prevents modification after creation
+            immutable: true, //prevents modification after creation
+
+            //had to add any type to bypass strict type checking because dayjs formatting is a string, not a Date.
+            get: (value: Date): any => dayjs(value).format("MMMM D, YYYY h:mm A") 
         }
     }
 );
@@ -49,12 +53,32 @@ const thoughtSchema = new Schema<IThought>(
         createdAt: {
             type: Date,
             default: () => dayjs().toDate(),
-            immutable: true //prevents modification after creation
+            immutable: true, //prevents modification after creation
+
+            //had to add any type to bypass strict type checking because dayjs formatting is a string, not a Date.
+            get: (value: Date): any => dayjs(value).format("MMMM D, YYYY h:mm A") 
         },
         username: {
             type: String,
             required: [true, "A username is required."]
         },
         reactions: [reactionSchema]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        toObject: {
+            virtuals: true,
+        }
     }
 );
+
+thoughtSchema.virtual("reactionCount")
+.get(function (this: IThought){
+    return this.reactions.length;
+});
+
+const Thought = model("Thought", thoughtSchema);
+
+export default Thought;

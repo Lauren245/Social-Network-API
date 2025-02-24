@@ -63,6 +63,9 @@ Email: laurenmoorejm@gmail.com
 by: Yingqi Chen
 
 8. **[Subdocuments](https://mongoosejs.com/docs/subdocs.html)** mongoose documentation
+
+9. **[Schemas](https://mongoosejs.com/docs/guide.html)** mongoose schema documentation
+
 ### 3rd-Party Software
 
 ## Screenshots
