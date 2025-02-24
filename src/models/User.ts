@@ -1,7 +1,7 @@
 import { Schema, Types, model, type Document } from "mongoose";
 
 interface IUser extends Document {
-    username: string, /*username will have the unique constraint, so it could technically be an ID, but it is of type string, so I don't think the username will be enough */
+    username: string, 
     email: string,
     thoughts: Types.ObjectId[], 
     friends: Types.ObjectId[],
@@ -14,7 +14,7 @@ const userSchema = new Schema<IUser>(
     {
         username: {
             type: String, 
-            unique: [true, "username must be unique"], 
+            unique: true, 
             required: [true, "username is required"], 
             trim: true
         },
