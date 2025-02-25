@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import { User } from '../models/index.js';
 
-//#region GET
+//GET
 
-//GET all users
 export const getAllUsers = async(_req: Request, res: Response) => {
     try{
         const users = await User.find().populate('friends').populate('thoughts');
@@ -14,7 +13,6 @@ export const getAllUsers = async(_req: Request, res: Response) => {
     }
 }
 
-//TODO: finish this
 export const getUserById = async (req: Request, res: Response) => {
     const { userId } = req.params;
     try{
@@ -33,10 +31,8 @@ export const getUserById = async (req: Request, res: Response) => {
         });
     }
 }
-//#endregion
 
-
-//#region POST
+//POST
 export const createUser = async (req: Request, res: Response) => {
     try{
         const user = await User.create(req.body);
@@ -46,4 +42,24 @@ export const createUser = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 }
-//#endregion
+
+//PUT
+export const updateUser = async (req: Request, res: Response) => {
+    try{
+        const user = await User.findOneAndUpdate(
+            { _id: req.params.userId }, 
+            { $set: req.body },
+            { runValidators: true, new: true }
+        );
+
+        if(!user){
+            res.status(404).json({ message: 'Unable to find a user with the specified ID.'})
+        }
+
+        res.json(user);
+
+    }catch(error: any){
+        console.error('Attempt to update user encountered error: ', error.message);
+        res.status(500).json({ message: error.message });
+    }
+}
