@@ -6,7 +6,7 @@ import { User } from '../models/index.js';
 //GET all users
 export const getAllUsers = async(_req: Request, res: Response) => {
     try{
-        const users = await User.find();
+        const users = await User.find().populate('friends').populate('thoughts');
         res.json(users);
     }catch(error: any){
         console.error('Attempt to get all users encountered error: ', error.message);
@@ -15,9 +15,24 @@ export const getAllUsers = async(_req: Request, res: Response) => {
 }
 
 //TODO: finish this
-// export const getUserById = async (req: Request, res: Response) => {
-
-// }
+export const getUserById = async (req: Request, res: Response) => {
+    const { userId } = req.params;
+    try{
+        const user = await User.findById(userId).populate('friends').populate('thoughts');
+        if(user) {
+            res.json(user)
+        }
+        else{
+            res.status(404).json({
+                message: 'User not found'
+            });
+        }
+    }catch(error: any){
+        res.status(500).json({
+            message: error.message
+        });
+    }
+}
 //#endregion
 
 

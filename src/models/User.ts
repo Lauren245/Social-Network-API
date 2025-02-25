@@ -33,6 +33,7 @@ const userSchema = new Schema<IUser>(
             type: Schema.Types.ObjectId, ref: "Thought"
         }],
         friends: [{
+            //I'm sure I'm not doing this right. I need to have a userID for searching for a specific user, but I don't want to show the friends list.
             type: Schema.Types.ObjectId, ref: "User"
         }]
     },
@@ -40,9 +41,8 @@ const userSchema = new Schema<IUser>(
         toJSON: {
             virtuals: true,
         },
-        toObject: {
-            virtuals: true,
-        }
+        id: false
+
     }
 );
 
