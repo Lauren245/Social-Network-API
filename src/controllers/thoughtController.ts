@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Thought, /*User*/ } from '../models/index.js';
+import { Thought, User } from '../models/index.js';
 
 //GET
 export const getAllThoughts = async(_req: Request, res: Response) => {
@@ -32,9 +32,20 @@ export const getThoughtById = async(req: Request, res: Response) => {
 export const createThought = async(req: Request, res: Response) => {
     try{
         const thought = await Thought.create(req.body);
-        /* !!! may want to consider adding something to check if a user with the specified
-        username exists since thoughts are supposed to be deleted if a user gets deleted*/
+        const { username } = thought;
+        //find the user based on their username, and add the thought to their thoughts array
+        const user = await User.findOneAndUpdate(
+            {username: username},
+            {$addToSet: {thoughts: thought._id}},
+            {new: true}
+        );
+
+        if(!user){
+            res.status(404).json({ message: 'Unable to find a user with that username.'});
+        }
+
         res.json(thought);
+
     }catch(error: any){
         console.error('Attempt to get add thought encountered error: ', error.message);
         res.status(500).json({ message: error.message});
