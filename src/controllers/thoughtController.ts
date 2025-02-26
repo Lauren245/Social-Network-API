@@ -51,3 +51,26 @@ export const createThought = async(req: Request, res: Response) => {
         res.status(500).json({ message: error.message});
     }
 }
+
+
+//PUT
+export const updateThoughtById = async(req: Request, res: Response) => {
+    const { thoughtId } = req.params;
+    try{
+        const thought = await Thought.findByIdAndUpdate(
+            thoughtId,
+            {$set: req.body},
+            {runValidators: true, new: true}
+        );
+
+        if(!thought){
+            res.status(404).json({ message: 'Unable to find a thought with the specified ID.'});
+        }
+
+        res.json(thought);
+        
+    }catch(error: any){
+        console.error('Attempt to get update thought encountered error: ', error.message);
+        res.status(500).json({ message: error.message});
+    }
+}
