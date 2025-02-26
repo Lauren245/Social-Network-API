@@ -85,3 +85,25 @@ export const deleteUser = async(req: Request, res: Response) => {
     }
 }
 
+//FRIENDS
+
+//ADD FRIEND
+export const addFriend = async(req: Request, res: Response) => {
+    try{
+        const friend = await User.findOneAndUpdate(
+            { _id: req.params.userId }, 
+            { $addToSet: { friends: req.body.friendId }},
+            { runValidators: true, new: true }
+        );
+
+        if(!friend){
+            res.status(404).json({ message: 'Unable to find a user with the specified ID.'})
+        }
+
+        res.json(friend);
+
+    }catch(error: any){
+        console.error('Attempt to add friend encountered error: ', error.message);
+        res.status(500).json({ message: error.message });
+    }
+}

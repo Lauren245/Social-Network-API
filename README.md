@@ -68,6 +68,8 @@ by: Yingqi Chen
 
 10. **[Getters/Setters in Mongoose](https://mongoosejs.com/docs/tutorials/getters-setters.html)** mongoose documentation
 
+11. **[FindOne Method in Mongoose](https://www.geekster.in/articles/findone-method-in-mongoose/#:~:text=In%20MongoDB%20and%20Node.,specified%20criteria%20from%20a%20collection.)** by: Geekster
+
 ### 3rd-Party Software
 
 ## Screenshots
