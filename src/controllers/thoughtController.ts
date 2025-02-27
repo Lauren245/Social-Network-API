@@ -82,12 +82,14 @@ export const deleteThought = async(req: Request, res: Response) => {
 
         if(!thought){
             res.status(404).json({ message: 'Unable to find thought with the specified ID.'})
+        }else{
+            await Thought.deleteMany({  _id: { $in: thought.reactions } });
+            res.status(200).json({ message: 'thought deleted successfully'});
         }
-
-        res.json(thought);
+    
 
     }catch(error: any){
-        console.error('Attempt to get delete thought encountered error: ', error.message);
+        console.error('Attempt to get delete thought encountered an error: ', error.message);
         res.status(500).json({ message: error.message});
     }
 }
@@ -128,7 +130,7 @@ export const deleteReaction = async(req: Request, res: Response) => {
             console.log('if statement flag triggered');
             res.status(404).json({ message: 'Unable to find a reaction with the specified id.'});
         }else{
-            res.json(thought);
+            res.status(200).json({ message: 'reaction deleted successfully'});
         }
 
     }catch(error: any){

@@ -131,7 +131,7 @@ export const removeFriend = async(req: Request, res: Response) => {
         );
 
         if(!user){
-            return res.status(404).json({ message: 'Unable to find a user with the specified ID.'});
+            res.status(404).json({ message: 'Unable to find a user with the specified ID.'});
         }
 
         const friend = await User.findByIdAndUpdate(
@@ -141,13 +141,15 @@ export const removeFriend = async(req: Request, res: Response) => {
         );
 
         if(!friend){
-           return res.status(404).json({ message: 'Unable to find a friend user with the specified ID.'});
+           res.status(404).json({ message: 'Unable to find a friend user with the specified ID.'});
+        }else{
+            res.status(200).json({ message: 'friend removed successfully'});
         }
 
-       return res.json(user);
+       
 
     }catch(error: any){
         console.error('Attempt to remove friend encountered an error: ', error.message);
-        return res.status(500).json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 }

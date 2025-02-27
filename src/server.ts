@@ -1,8 +1,11 @@
 import express from 'express';
 import routes from './routes/index.js';
 import db from './config/connection.js';
+// import cleanDB from './seeds/cleanDB.js';
 
 await db();
+//Uncomment the following (and the above import statement to clear out the database.)
+// await cleanDB();
 
 const PORT = process.env.PORT || 3001;
 const app = express();
