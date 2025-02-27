@@ -118,7 +118,6 @@ export const createReaction = async(req: Request, res: Response) => {
 //DELETE
 export const deleteReaction = async(req: Request, res: Response) => {
     try{
-        console.log('req.params = ', req.params);
         const thought = await Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
             {$pull: { reactions: {reactionId: req.params.reactionId}}},
@@ -126,10 +125,11 @@ export const deleteReaction = async(req: Request, res: Response) => {
         );
 
         if(!thought){
+            console.log('if statement flag triggered');
             res.status(404).json({ message: 'Unable to find a reaction with the specified id.'});
+        }else{
+            res.json(thought);
         }
-
-        res.json(thought);
 
     }catch(error: any){
         console.error('Attempt to get delete a reaction encountered an error: ', error.message);
