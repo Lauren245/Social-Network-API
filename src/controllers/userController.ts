@@ -87,7 +87,7 @@ export const deleteUser = async(req: Request, res: Response) => {
 
 //FRIENDS
 
-//PUT
+//POST
 export const addFriend = async(req: Request, res: Response) => {
     try{
         const user = await User.findOneAndUpdate(
@@ -117,5 +117,7 @@ export const addFriend = async(req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+
 
 //DELETE

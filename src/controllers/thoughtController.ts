@@ -76,20 +76,21 @@ export const updateThoughtById = async(req: Request, res: Response) => {
 }
 
 //DELETE
-// export const DeleteThought = async(req: Request, res: Response) => {
-//     try{
-//         const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId});
+export const deleteThought = async(req: Request, res: Response) => {
+    try{
+        const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId});
 
-//         if(!thought){
-//             res.status(404).json({ message: 'Unable to find thought with the specified ID.'})
-//         }
+        if(!thought){
+            res.status(404).json({ message: 'Unable to find thought with the specified ID.'})
+        }
 
-//         const reac
-//     }catch(error: any){
-//         console.error('Attempt to get delete thought encountered error: ', error.message);
-//         res.status(500).json({ message: error.message});
-//     }
-// }
+        res.json(thought);
+
+    }catch(error: any){
+        console.error('Attempt to get delete thought encountered error: ', error.message);
+        res.status(500).json({ message: error.message});
+    }
+}
 
 //REACTIONS
 
@@ -115,11 +116,23 @@ export const createReaction = async(req: Request, res: Response) => {
 }
 
 //DELETE
-// export const deleteReaction = async(req: Request, res: Response) => {
-//     try{
-//         const reaction = await 
-//     }catch(error: any){
-//         console.error('Attempt to get delete a reaction encountered an error: ', error.message);
-//         res.status(500).json({ message: error.message}); 
-//     }
-// }
+export const deleteReaction = async(req: Request, res: Response) => {
+    try{
+        console.log('req.params = ', req.params);
+        const thought = await Thought.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$pull: { reactions: {reactionId: req.params.reactionId}}},
+            {new: true }
+        );
+
+        if(!thought){
+            res.status(404).json({ message: 'Unable to find a reaction with the specified id.'});
+        }
+
+        res.json(thought);
+
+    }catch(error: any){
+        console.error('Attempt to get delete a reaction encountered an error: ', error.message);
+        res.status(500).json({ message: error.message}); 
+    }
+}
