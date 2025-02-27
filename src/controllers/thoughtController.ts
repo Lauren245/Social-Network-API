@@ -93,7 +93,7 @@ export const updateThoughtById = async(req: Request, res: Response) => {
 
 //REACTIONS
 
-//POST
+//PUT
 export const createReaction = async(req: Request, res: Response) => {
     try{
         const thought = await Thought.findByIdAndUpdate(
@@ -113,3 +113,13 @@ export const createReaction = async(req: Request, res: Response) => {
         res.status(500).json({ message: error.message}); 
     }
 }
+
+//DELETE
+// export const deleteReaction = async(req: Request, res: Response) => {
+//     try{
+//         const reaction = await 
+//     }catch(error: any){
+//         console.error('Attempt to get delete a reaction encountered an error: ', error.message);
+//         res.status(500).json({ message: error.message}); 
+//     }
+// }
