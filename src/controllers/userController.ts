@@ -85,3 +85,71 @@ export const deleteUser = async(req: Request, res: Response) => {
     }
 }
 
+//FRIENDS
+
+//POST
+export const addFriend = async(req: Request, res: Response) => {
+    try{
+        const user = await User.findOneAndUpdate(
+            { _id: req.params.userId }, 
+            { $addToSet: { friends: req.params.friendId }},
+            { runValidators: true, new: true }
+        );
+
+        if(!user){
+            res.status(404).json({ message: 'Unable to find a user with the specified ID.'});
+        }
+
+        const friend = await User.findOneAndUpdate(
+            { _id: req.params.friendId },
+            { $addToSet: {friends: req.params.userId }},
+            { runValidators: true, new: true }
+        );
+
+        if(!friend){
+            res.status(404).json({ message: 'Unable to find friend information.'});
+        }
+
+        res.json({user, friend});
+
+    }catch(error: any){
+        console.error('Attempt to add friend encountered an error: ', error.message);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+
+//DELETE
+export const removeFriend = async(req: Request, res: Response) => {
+    try{
+        console.log('req.params = ', req.params);
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            { $pull: { friends: req.params.friendId } },
+            { new: true }
+        );
+
+        if(!user){
+            res.status(404).json({ message: 'Unable to find a user with the specified ID.'});
+        }
+
+        const friend = await User.findByIdAndUpdate(
+            req.params.friendId,
+            { $pull: { friends: req.params.userId } },
+            { new: true }
+        );
+
+        if(!friend){
+           res.status(404).json({ message: 'Unable to find a friend user with the specified ID.'});
+        }else{
+            res.status(200).json({ message: 'friend removed successfully'});
+        }
+
+       
+
+    }catch(error: any){
+        console.error('Attempt to remove friend encountered an error: ', error.message);
+        res.status(500).json({ message: error.message });
+    }
+}

@@ -41,10 +41,8 @@ const reactionSchema = new Schema<IReaction>(
             virtuals: true,
             getters: true //this is technically not needed because we want to include the getters and toJSON does this by default.
         },
-        toObject: {
-            virtuals: true,
-            getters: true
-        }
+        id: false,
+        _id: false
     }
 );
 
@@ -79,10 +77,7 @@ const thoughtSchema = new Schema<IThought>(
             virtuals: true,
             getters: true //this is technically not needed because we want to include the getters and toJSON does this by default.
         },
-        toObject: {
-            virtuals: true,
-            getters: true
-        }
+        id: false
     }
 );
 
