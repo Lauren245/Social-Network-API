@@ -7,7 +7,7 @@ export const getAllThoughts = async(_req: Request, res: Response) => {
         const thoughts = await Thought.find().populate('reactions');
         res.json(thoughts);
     }catch(error: any){
-        console.error('Attempt to get all thoughts encountered error: ', error.message);
+        console.error('Attempt to get all thoughts encountered an error: ', error.message);
         res.status(500).json({ message: error.message});
     }
 }
@@ -23,7 +23,7 @@ export const getThoughtById = async(req: Request, res: Response) => {
         }
 
     }catch(error: any){
-        console.error('Attempt to find thought by id encountered error: ', error.message);
+        console.error('Attempt to find thought by id encountered an error: ', error.message);
         res.status(500).json({ message: error.message});
     }
 }
@@ -47,7 +47,7 @@ export const createThought = async(req: Request, res: Response) => {
         res.json(thought);
 
     }catch(error: any){
-        console.error('Attempt to get add thought encountered error: ', error.message);
+        console.error('Attempt to get add thought encountered an error: ', error.message);
         res.status(500).json({ message: error.message});
     }
 }
@@ -68,9 +68,48 @@ export const updateThoughtById = async(req: Request, res: Response) => {
         }
 
         res.json(thought);
-        
+
     }catch(error: any){
-        console.error('Attempt to get update thought encountered error: ', error.message);
+        console.error('Attempt to get update thought encountered an error: ', error.message);
         res.status(500).json({ message: error.message});
+    }
+}
+
+//DELETE
+// export const DeleteThought = async(req: Request, res: Response) => {
+//     try{
+//         const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId});
+
+//         if(!thought){
+//             res.status(404).json({ message: 'Unable to find thought with the specified ID.'})
+//         }
+
+//         const reac
+//     }catch(error: any){
+//         console.error('Attempt to get delete thought encountered error: ', error.message);
+//         res.status(500).json({ message: error.message});
+//     }
+// }
+
+//REACTIONS
+
+//POST
+export const createReaction = async(req: Request, res: Response) => {
+    try{
+        const thought = await Thought.findByIdAndUpdate(
+            req.params.thoughtId,
+            {$addToSet: {reactions: req.body}},
+            { runValidators: true, new: true }
+        );
+
+        if(!thought){
+            res.status(404).json({ message: 'Unable to find the thought with the specified ID to add the reaction to.'});
+        }
+
+        res.json(thought);
+
+    }catch(error: any){
+        console.error('Attempt to get add a reaction encountered an error: ', error.message);
+        res.status(500).json({ message: error.message}); 
     }
 }
