@@ -113,7 +113,7 @@ export const addFriend = async(req: Request, res: Response) => {
         res.json({user, friend});
 
     }catch(error: any){
-        console.error('Attempt to add friend encountered error: ', error.message);
+        console.error('Attempt to add friend encountered an error: ', error.message);
         res.status(500).json({ message: error.message });
     }
 }
@@ -121,3 +121,33 @@ export const addFriend = async(req: Request, res: Response) => {
 
 
 //DELETE
+export const removeFriend = async(req: Request, res: Response) => {
+    try{
+        console.log('req.params = ', req.params);
+        const user = await User.findByIdAndUpdate(
+            req.params.userId,
+            { $pull: { friends: req.params.friendId } },
+            { new: true }
+        );
+
+        if(!user){
+            return res.status(404).json({ message: 'Unable to find a user with the specified ID.'});
+        }
+
+        const friend = await User.findByIdAndUpdate(
+            req.params.friendId,
+            { $pull: { friends: req.params.userId } },
+            { new: true }
+        );
+
+        if(!friend){
+           return res.status(404).json({ message: 'Unable to find a friend user with the specified ID.'});
+        }
+
+       return res.json(user);
+
+    }catch(error: any){
+        console.error('Attempt to remove friend encountered an error: ', error.message);
+        return res.status(500).json({ message: error.message });
+    }
+}
